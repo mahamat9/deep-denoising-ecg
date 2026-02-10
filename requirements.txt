@@ -1,0 +1,12 @@
+torch
+torchvision
+torchviz
+numpy
+pandas
+matplotlib
+wfdb
+scipy
+scikit-learn
+tqdm
+notebook
+subprocess
