@@ -3,5 +3,9 @@ Sujet-projet-test.pdf
 notebooks/train_models-comp.ipynb
 utils/wfdb_fix.py
 
+autoencoder_arch
 autoencoder_arch.mnd
 diffusion_arch
+diffusion_arch.mnd
+
+ecg-ancien/

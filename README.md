@@ -30,10 +30,35 @@ A diffusion model is trained to predict the noise at each diffusion step, enabli
 ![Diffusion Architecture](diffusion_arch.png)
 
 ## Training Protocol
-- Train/val/test split: 80/10/10, with fixed indices saved to disk for reproducibility.
+- Train/val/test split: 80/10/10, with fixed indices saved to disk for *reproducibility*.
 - Optimizer: Adam with ReduceLROnPlateau scheduling.
 - Regularization: early stopping based on validation loss.
-- Metrics: MSE for optimization, SNR improvement for interpretability.
+- Metrics: MSE and others functions for optimization
+
+## Experimental Approach (from `notebooks/train_models-comp.ipynb`)
+The notebook follows a comparative, end-to-end workflow:
+- environment setup (local/Colab compatibility),
+- PTB-XL loading and noisy-clean pair generation,
+- training/validation/testing split,
+- Autoencoder training with early stopping and SNR tracking,
+- Diffusion training with the same evaluation logic,
+- final comparison via loss curves and denoising examples.
+
+In practice, this notebook serves as the reference for the full experimentation logic before moving to script-based runs.
+
+## Current Limitation: Diffusion Model Needs Further Refinement
+Under the current configuration, the diffusion branch does not yet reach the same practical denoising quality as the autoencoder baseline. This should be interpreted as a model/protocol maturity issue rather than a limitation of diffusion methods in general.
+
+Likely causes include:
+- insufficient architecture tuning for 1D ECG signals,
+- training objective/sampling schedule not yet optimized,
+- mismatch between noise process used in training and ECG artifact structure,
+- limited hyperparameter exploration (steps, beta schedule, loss weighting, conditioning).
+
+## Priority Recommendations
+1. **Most important:** leverage and adapt what is state-of-the-art in image denoising diffusion literature (training tricks, noise schedules, objective variants, sampler design), then transfer these ideas to 1D ECG.
+2. Strengthen the current diffusion network (capacity, multi-scale blocks, temporal conditioning, residual/attention design for ECG).
+3. Improve training protocol (longer training, tuned LR schedule, better validation strategy, ablation studies).
 
 ## Reproducibility
 - Random seed fixed across PyTorch and NumPy.
